@@ -1,11 +1,9 @@
-<router-outlet></router-outlet>
 <mat-drawer-container class="example-container" autosize>
   <mat-drawer #drawer class="example-sidenav" mode="side" opened>
-    <p>Auto-resizing sidenav</p>
-    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-    <button (click)="showFiller = !showFiller" mat-raised-button>
-      Toggle extra text
-    </button>
+      <mat-nav-list>
+          <a  mat-list-item [routerLink]="[ '']"><mat-icon>playlist_add</mat-icon> Formulário</a>
+          <a  mat-list-item [routerLink]="[ 'list']"><mat-icon>list</mat-icon>Listagem</a>
+       </mat-nav-list>
   </mat-drawer>
 
   <div class="example-sidenav-content">
@@ -13,6 +11,5 @@
       Toggle sidenav
     </button>
   </div>
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur, quos a velit eligendi soluta dolores incidunt recusandae. Sed inventore unde dolores voluptatibus, ullam dignissimos dolor facilis quasi cum modi reprehenderit.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem veniam saepe veritatis fuga alias sint, iste nesciunt recusandae obcaecati officiis repellat magnam, architecto aperiam illo dolore dicta nulla vel sunt!
+  <router-outlet></router-outlet>
 </mat-drawer-container>

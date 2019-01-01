@@ -1,6 +1,6 @@
 .example-container {
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    height:100vh;
+/*     border: 1px solid rgba(0, 0, 0, 0.5);
+ */    height:100vh;
 
   }
   
@@ -9,8 +9,17 @@
     height: 100%;
     align-items: center;
     justify-content: center; */
+    margin: 0 auto;
   }
   
   .example-sidenav {
-    padding: 20px;
+  }
+  mat-nav-list {
+    margin-top:2%;
+  }
+  a {
+    font-size: 5pt;
+  }
+  mat-icon {
+    margin-right: 4%;
   }

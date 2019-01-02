@@ -1,5 +1,5 @@
-<h3>Cadastro de Itens {{this.value}}</h3>
-<form class="example-form">
+<h3>Cadastro de Itens </h3>
+<form class="example-form" (submit)="onSubmit(item, type, quantity, price, perecivelYes, perecivelNo, expirationDate, manufacturingDate)">
   <mat-form-field>
     <input matInput #item maxlength="50" type="character" placeholder="Nome do item" (keypress)="lettersOnly($event, item)"
       required>
@@ -13,25 +13,42 @@
       <mat-option value=2>Unidade</mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Quantidade" dir="rtl" type="number" class="example-right-align" (keypress)="moneyMask($event, item)">
+  <mat-form-field *ngIf="!(type.value)">
+    <input #quantity matInput placeholder="Quantidade" dir="rtl" type="number" class="example-right-align" (keypress)="moneyMask($event, item)"
+      disabled>
   </mat-form-field>
+  <mat-form-field *ngIf="(type.value==0)">
+      <input matInput #quantity id="ltInput" placeholder="Quantidade" inputmode="numeric" (keyup)="send($event)" (input)="setMask(quantity)"
+      dir="rtl" class="example-right-align" required ><span matSuffix>Lt</span>
+  </mat-form-field>
+  <mat-form-field *ngIf="(type.value==1)">
+      <input matInput #quantity id="kgInput" placeholder="Quantidade" inputmode="numeric" (keyup)="send($event)" (input)="setMask(quantity)"
+    dir="rtl" class="example-right-align" required ><span matSuffix>Kg</span>
+    </mat-form-field>
+  <mat-form-field *ngIf="(type.value==2)">
+      <input matInput #quantity type="number" id="unInput" class="example-right-align" required />     <span matSuffix>Un</span>
+    </mat-form-field>
   <mat-form-field>
-    <input matInput #input id="moneyInput" placeholder="Preço" inputmode="numeric" (keyup)="send($event)" (input)="input.value=SimpleMaskMoney.format(input.value)"
+    <input matInput #price id="moneyInput" placeholder="Preço" inputmode="numeric" (keyup)="send($event)" (input)="setMask(price)"
       dir="rtl" class="example-right-align" required />
   </mat-form-field><br>
-  <label class="radioDiv" for="myRadio"> <small>Produto perecível:</small> </label>
-  <mat-radio-group #myRadio formControlName="floatLabel" required>
-    <mat-radio-button class="radioOption" value="auto">Sim</mat-radio-button>
-    <mat-radio-button class="radioOption" value="always">Não</mat-radio-button>
+  <label class="radioDiv" for="perecivel"> <small>Produto perecível:</small> </label>
+  <mat-radio-group formControlName="perecivel" required>
+    <mat-radio-button #perecivelYes class="radioOption" value="0" >Sim</mat-radio-button>
+    <mat-radio-button #perecivelNo class="radioOption" value="1">Não</mat-radio-button>
   </mat-radio-group>
-  <mat-form-field>
-    <input matInput [matDatepicker]="picker" placeholder="Data de validade">
+   <mat-form-field *ngIf="(perecivelYes.checked)">
+    <input #expirationDate matInput [matDatepicker]="picker" placeholder="Data de validade" required>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
+  <mat-form-field *ngIf="!(perecivelYes.checked)">
+      <input #expirationDate matInput [matDatepicker]="picker" placeholder="Data de validade" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
   <mat-form-field>
-    <input matInput [matDatepicker]="picker2" placeholder="Data de fabricação">
+    <input #manufacturingDate matInput [matDatepicker]="picker2" placeholder="Data de fabricação" required>
     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
     <mat-datepicker #picker2></mat-datepicker>
   </mat-form-field>

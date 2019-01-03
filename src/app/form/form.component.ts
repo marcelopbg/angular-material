@@ -8,6 +8,7 @@ import SimpleMaskMoney from 'simple-mask-money'; // import mask
 })
 export class FormComponent implements OnInit {
   oldValue = ''
+  itens = new Array()
   // declare mask in your class to use in html templete
   SimpleMaskMoney = SimpleMaskMoney; // if you prefer use only in class this line is not necessary
   Kg = {
@@ -52,6 +53,7 @@ export class FormComponent implements OnInit {
     };
 
   }
+  //
   lettersOnly(event, input) {
     if (((event.keyCode >= 65 && event.keyCode <= 90) || (event.keyCode >= 97 && event.keyCode <= 122) || (event.keyCode == 32))) {
       this.oldValue = input.value
@@ -60,33 +62,59 @@ export class FormComponent implements OnInit {
       return false
     }
   }
-  onSubmit(item, type, quantity, price, perecivelYes, perecivelNo, expirationDate, manufacturingDate) {
-
+  onSubmit(item, type, price, perecivelYes, perecivelNo, manufacturingDate) {
+    var itemObj = (new Object())
+    var newQuantity
+    var expirationDate
     event.preventDefault()
-    console.log('item', item.value);
-    console.log('type', type.value);
     if(type.value==='0') {
-      console.log('everithing is gonna e alright', document.getElementById("ltInput").value)
+      newQuantity = document.getElementById("ltInput").value
     }else if(type.value==='1') {
-      console.log('everithing is gonna e alright', document.getElementById("kgInput").value)
+      newQuantity = document.getElementById("kgInput").value
     }else if(type.value==='2') {
-      console.log('everithing is gonna e alright', document.getElementById("unInput").value)
+      newQuantity = document.getElementById("unInput").value
     }
-    console.log('quantity', quantity);
-    console.log('input', price.value);
+    console.log('name', item.value);
+    console.log('quantity', newQuantity);
+    console.log('type', type.value);
+    console.log('input', price);
     console.log('radioYes', perecivelYes.checked);
     console.log('radioNO', perecivelNo.checked);
-    console.log('expirationDate', expirationDate);
     console.log('manufacturingDate', manufacturingDate.value);
-
+  if(perecivelYes.checked===true) {
+    expirationDate =  document.getElementById('expirationPerecivel').value
+  }else {
+    expirationDate =   document.getElementById('expirationNaoPerecivel').value
   }
+  itemObj = {
+    name: item.value,
+    quantity: newQuantity,
+    type: type.value,
+    price: price,
+    expirationDate: expirationDate,
+    manufacturingDate: manufacturingDate.value
+  }
+  var localStorageItensList = localStorage.getItem('itensList')
+  if(!localStorageItensList) {
+  this.itens.push(itemObj)
+  var json = JSON.stringify(this.itens)
+  localStorage.removeItem('itensList');
+  localStorage.setItem('itensList', json)  
 
-  send(e, type) {
+  }else {
+    var itens = JSON.parse(localStorageItensList);
+    itens.push(itemObj);
+    var json = JSON.stringify(itens)
+    console.log(json);
+    localStorage.setItem('itensList', json)  
+  }
+}
+
+  send(e) {
     if (e.key !== 'Enter') return;
     SimpleMaskMoney.formatToNumber(this.val);
   }
   setMask(item) {
-    console.log(item.id);
     switch (item.id) {
       case 'kgInput':
         SimpleMaskMoney.args = this.Kg

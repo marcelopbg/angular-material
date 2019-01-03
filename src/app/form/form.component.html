@@ -1,5 +1,5 @@
 <h3>Cadastro de Itens </h3>
-<form class="example-form" (submit)="onSubmit(item, type, quantity, price, perecivelYes, perecivelNo, expirationDate, manufacturingDate)">
+<form class="example-form" (submit)="onSubmit(item, type, price.value, perecivelYes, perecivelNo, manufacturingDate)">
   <mat-form-field>
     <input matInput #item maxlength="50" type="character" placeholder="Nome do item" (keypress)="lettersOnly($event, item)"
       required>
@@ -38,12 +38,12 @@
     <mat-radio-button #perecivelNo class="radioOption" value="1">Não</mat-radio-button>
   </mat-radio-group>
    <mat-form-field *ngIf="(perecivelYes.checked)">
-    <input #expirationDate matInput [matDatepicker]="picker" placeholder="Data de validade" required>
+    <input id="expirationPerecivel" #expirationDate matInput [matDatepicker]="picker" placeholder="Data de validade" required>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <mat-form-field *ngIf="!(perecivelYes.checked)">
-      <input #expirationDate matInput [matDatepicker]="picker" placeholder="Data de validade" required>
+      <input id="expirationNaoPerecivel" #expirationDate matInput [matDatepicker]="picker" placeholder="Data de validade">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>

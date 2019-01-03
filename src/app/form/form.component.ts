@@ -64,15 +64,15 @@ export class FormComponent implements OnInit {
   }
   onSubmit(item, type, price, perecivelYes, perecivelNo, manufacturingDate) {
     var itemObj = (new Object())
-    var newQuantity
+    var newQuantity:any
     var expirationDate
     event.preventDefault()
     if(type.value==='0') {
-      newQuantity = document.getElementById("ltInput").value
+      newQuantity = (<HTMLInputElement>document.getElementById("ltInput")).value
     }else if(type.value==='1') {
-      newQuantity = document.getElementById("kgInput").value
+      newQuantity = (<HTMLInputElement>document.getElementById("kgInput")).value
     }else if(type.value==='2') {
-      newQuantity = document.getElementById("unInput").value
+      newQuantity = (<HTMLInputElement>document.getElementById("unInput")).value
     }
     console.log('name', item.value);
     console.log('quantity', newQuantity);
@@ -82,9 +82,9 @@ export class FormComponent implements OnInit {
     console.log('radioNO', perecivelNo.checked);
     console.log('manufacturingDate', manufacturingDate.value);
   if(perecivelYes.checked===true) {
-    expirationDate =  document.getElementById('expirationPerecivel').value
+    expirationDate =  (<HTMLInputElement>document.getElementById('expirationPerecivel')).value
   }else {
-    expirationDate =   document.getElementById('expirationNaoPerecivel').value
+    expirationDate =   (<HTMLInputElement>document.getElementById('expirationNaoPerecivel')).value
   }
   itemObj = {
     name: item.value,
